@@ -9,5 +9,6 @@ __pycache__/
 
 # OS files
 .DS_Store
+# Kubernetes / local binaries (never commit)
 minikube*
 kubectl*
