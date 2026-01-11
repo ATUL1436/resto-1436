@@ -1,0 +1,8 @@
+Frontend application deployed successfully 🚀
+
+To access the frontend locally, run:
+
+kubectl port-forward svc/{{ include "frontend-chart.fullname" . }} 3000:80
+
+Then open in browser:
+http://localhost:3000

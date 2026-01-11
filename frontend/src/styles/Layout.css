@@ -1,0 +1,99 @@
+/* =====================
+   RESET
+===================== */
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;     /* ❌ body scroll बंद */
+}
+
+/* =====================
+   APP LAYOUT
+===================== */
+.app-layout {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =====================
+   HEADER (STABLE)
+===================== */
+.header {
+  height: 70px;
+  background: #ffffff;
+  border-bottom: 1px solid #ddd;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+/* =====================
+   SCROLL WRAPPER
+   (ONLY THIS SCROLLS)
+===================== */
+.scroll-wrapper {
+  flex: 1;
+  overflow-y: auto;     /* 🔥 ONLY SCROLL HERE */
+}
+
+/* =====================
+   SIDEBAR + CONTENT
+===================== */
+.content-area {
+  display: flex;
+  min-height: calc(100vh - 70px);
+}
+
+/* =====================
+   SIDEBAR (STABLE)
+===================== */
+.sidebar {
+  width: 250px;
+  background: #68387e;
+  color: white;
+  padding: 20px;
+
+  position: sticky;    /* 🔥 KEY LINE */
+  top: 0;              /* relative to scroll-wrapper */
+  height: calc(100vh - 70px);
+
+  overflow: hidden;    /* ❌ no scroll */
+  flex-shrink: 0;
+
+  transition: width 0.3s ease; /* 🔥 smooth animation */
+}
+
+/* =====================
+   PAGE CONTENT
+===================== */
+.page-content {
+  flex: 1;
+  padding: 20px;
+  background: #f5f5f5;
+}
+  
+/* =====================
+   FOOTER (FULL WIDTH)
+===================== */
+.footer {
+  height: 45px;
+  background: #111;
+  color: white;
+  text-align: center;
+  line-height: 45px;
+}
+
+
+.sidebar.closed {
+  width: 50px;
+  padding: 20px 10px ;
+}
+
+.sidebar-toggle {
+  background: #68387e;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  margin-right: 15px;
+
+}

@@ -1,0 +1,10 @@
+.footer {
+  height: 45px;
+  background: #111;
+  color: white;
+  text-align: center;
+  line-height: 45px;
+
+  width: calc(100% + 250px);   /* sidebar width add */
+  margin-left: -250px;         /* pull under sidebar */
+}

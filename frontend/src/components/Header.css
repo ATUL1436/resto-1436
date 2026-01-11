@@ -1,0 +1,93 @@
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  height: 40px;
+  padding: 15px 25px;
+  background-color: #e3420d;
+  color: rgb(254, 252, 252);
+
+  box-shadow: 0 2px 6px rgba(23, 239, 11, 0.15);
+}
+
+.logo {
+  font-size: 30px;
+  font-weight:bold;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  letter-spacing: 0.8px;
+  font-family: "Playfair Display", serif;
+  margin-left: 35px;
+  
+}
+.logo img {
+    max-height: 140px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    margin-right: -50px;
+    z-index: 1000;
+}
+.logo span {
+  font-size: 30px;
+  font-weight: 200;
+  letter-spacing: 1px;
+  font-family: "Pacifico", cursive;
+  color: #060606;
+  line-height: 1;      /* 🔥 extra vertical space remove */
+  margin: 0;  
+  width: 400px;         /* 🔥 default margin remove */
+  align-items: center;
+  text-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+}
+
+
+
+.header-right {
+  display:flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.notification {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.user {
+  background: rgba(4, 237, 8, 0.986);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight:bold;
+}
+
+.menu-dropdown {
+  min-width: 100px;
+  padding: 8px 12px;
+  border-radius: 14px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #daed0c;
+  color: hsl(120, 4%, 5%);
+  transition: all 0.2s ease;
+  margin-right: -40px;
+}
+
+/* hover */
+.menu-dropdown:hover {
+  background-color: #e2e8f0;
+}
+
+/* focus */
+.menu-dropdown:focus {
+  box-shadow: 0 0 0 2px #38bdf8;
+}
+
+
+
