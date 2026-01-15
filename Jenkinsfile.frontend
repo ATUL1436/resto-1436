@@ -6,7 +6,7 @@ pipeline {
         IMAGE_TAG = "latest"
         NAMESPACE = "resto"
         RELEASE_NAME = "frontend"
-        CHART_PATH = "./helm/frontend-chart"
+        CHART_PATH = "./frontend/frontend-chart"
     }
 
     stages {
