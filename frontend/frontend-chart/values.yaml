@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: atul/frontend
-  pullPolicy: IfNotPresent
+  repository: atul1436/frontend
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: v1
+  tag: latest
 
 imagePullSecrets: []
 nameOverride: ""

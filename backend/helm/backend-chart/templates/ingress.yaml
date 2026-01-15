@@ -11,6 +11,8 @@ metadata:
   {{- end }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
+  tls:
+    {{- toYaml .Values.ingress.tls | nindent 4 }}
   rules:
     {{- range .Values.ingress.hosts }}
     - host: {{ .host }}
@@ -25,14 +27,7 @@ spec:
                 name: {{ include "backend-chart.fullname" $ }}
                 port:
                   number: {{ $.Values.service.port }}
-
-          - path: /
-            pathType: Prefix
-            backend:
-              service:  
-                name: frontend-frontend-chart
-                port:
-                  number: 80
+                  
           {{- end }}
     {{- end }}
 {{- end }}

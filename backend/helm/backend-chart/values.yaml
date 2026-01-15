@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: atul/django-backend
-  pullPolicy: IfNotPresent
+  repository: atul1436/django-backend
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: v3
+  tag: v6
 
 imagePullSecrets: []
 nameOverride: ""
@@ -49,14 +49,19 @@ ingress:
   annotations: 
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: atul.app
+    - host: atul.local
       paths:
         - path: /api(/|$)(.*)
           pathType: ImplementationSpecific
-  tls: []
+  tls:
+    - secretName: atul-tls
+      hosts:
+        - atul.local
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local

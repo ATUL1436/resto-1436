@@ -1,0 +1,20 @@
+[0;1;32m●[0m jenkins.service - Jenkins Continuous Integration Server
+     Loaded: loaded (]8;;file://Ubuntu/usr/lib/systemd/system/jenkins.service/usr/lib/systemd/system/jenkins.service]8;;; [0;1;32menabled[0m; preset: [0;1;32menabled[0m)
+     Active: [0;1;32mactive (running)[0m since Thu 2026-01-15 04:56:43 UTC; 12min ago
+   Main PID: 1195 (java)
+      Tasks: 49 (limit: 5670)
+     Memory: 788.1M (peak: 800.4M)
+        CPU: 23.741s
+     CGroup: /system.slice/jenkins.service
+             └─[0;38;5;245m1195 /usr/bin/java -Djava.awt.headless=true -jar /usr/share/java/jenkins.war --webroot=/var/cache/jenkins/war --httpPort=8080[0m
+
+Jan 15 04:56:35 Ubuntu jenkins[1195]: [LF]> 5c8ecdfa53774ef692f2040972f5e4c4
+Jan 15 04:56:35 Ubuntu jenkins[1195]: [LF]>
+Jan 15 04:56:35 Ubuntu jenkins[1195]: [LF]> This may also be found at: /var/lib/jenkins/secrets/initialAdminPassword
+Jan 15 04:56:35 Ubuntu jenkins[1195]: [LF]>
+Jan 15 04:56:35 Ubuntu jenkins[1195]: [LF]> *************************************************************
+Jan 15 04:56:35 Ubuntu jenkins[1195]: [LF]> *************************************************************
+Jan 15 04:56:35 Ubuntu jenkins[1195]: [LF]> *************************************************************
+Jan 15 04:56:43 Ubuntu jenkins[1195]: 2026-01-15 04:56:43.483+0000 [id=39]        INFO        jenkins.InitReactorRunner$1#onAttained: Completed initialization
+Jan 15 04:56:43 Ubuntu jenkins[1195]: 2026-01-15 04:56:43.506+0000 [id=24]        INFO        hudson.lifecycle.Lifecycle#onReady: Jenkins is fully up and running
+Jan 15 04:56:43 Ubuntu systemd[1]: Started jenkins.service - Jenkins Continuous Integration Server.
