@@ -2,11 +2,12 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_REPO = "atul1436/frontend"
-        IMAGE_TAG = "latest"
-        NAMESPACE = "resto"
+        IMAGE_REPO   = "atul1436/frontend"
+        IMAGE_TAG    = "latest"
+        NAMESPACE    = "resto"
         RELEASE_NAME = "frontend"
-        CHART_PATH = "./frontend/frontend-chart"
+        CHART_PATH   = "./frontend/frontend-chart"
+        KUBECONFIG   = "/var/lib/jenkins/.kube/config"
     }
 
     stages {
@@ -38,23 +39,24 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 withCredentials([string(credentialsId: 'dockerhub-token', variable: 'TOKEN')]) {
-                    sh """
-                      echo \$TOKEN | docker login -u atul1436 --password-stdin
+                    sh '''
+                      echo $TOKEN | docker login -u atul1436 --password-stdin
                       docker push ${IMAGE_REPO}:${IMAGE_TAG}
-                    """
+                      docker logout
+                    '''
                 }
             }
         }
 
         stage('Deploy using Helm') {
             steps {
-                sh """
+                sh '''
                   helm upgrade --install ${RELEASE_NAME} ${CHART_PATH} \
-                  -n ${NAMESPACE} \
-                  --set image.repository=${IMAGE_REPO} \
-                  --set image.tag=${IMAGE_TAG} \
-                  --set image.pullPolicy=Always
-                """
+                    -n ${NAMESPACE} --create-namespace \
+                    --set image.repository=${IMAGE_REPO} \
+                    --set image.tag=${IMAGE_TAG} \
+                    --set image.pullPolicy=Always
+                '''
             }
         }
     }
