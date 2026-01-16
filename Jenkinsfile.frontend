@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_REPO   = "atul1436/frontend"
-        IMAGE_TAG    = "latest"
+        IMAGE_TAG    = "${GIT_COMMIT}"
         NAMESPACE    = "resto"
         RELEASE_NAME = "frontend"
         CHART_PATH   = "./frontend/frontend-chart"
