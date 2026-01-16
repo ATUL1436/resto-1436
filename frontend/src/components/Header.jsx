@@ -11,7 +11,7 @@ function Header() {
         
         <div className="logo">
           <img src={logo} alt="Atul resto Logo" />
-          <span>🍽 Atul Restaurant</span>
+          <span>🍽 Atul Restaurant & BAR </span>
         </div>
       </div>
 
