@@ -1,5 +1,39 @@
 pipeline {
-    agent none   // 🔴 IMPORTANT
+    agent {
+        kubernetes {
+            yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: node
+    image: node:18-alpine
+    command:
+    - cat
+    tty: true
+
+  - name: docker
+    image: docker:24.0
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - name: docker-sock
+      mountPath: /var/run/docker.sock
+
+  - name: helm
+    image: alpine/helm:3.14.0
+    command:
+    - cat
+    tty: true
+
+  volumes:
+  - name: docker-sock
+    hostPath:
+      path: /var/run/docker.sock
+"""
+        }
+    }
 
     environment {
         IMAGE_REPO   = "atul1436/frontend"
@@ -12,64 +46,63 @@ pipeline {
     stages {
 
         stage('Checkout Code') {
-            agent any
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/atul1436/resto-1436.git'
+                checkout scm
             }
         }
 
         stage('Build React App') {
-            agent {
-                docker {
-                    image 'node:18-alpine'
-                    args '-u root:root'
-                }
-            }
             steps {
-                dir('frontend') {
-                    sh '''
-                      node -v
-                      npm -v
-                      npm install
-                      npm run build
-                    '''
+                container('node') {
+                    dir('frontend') {
+                        sh '''
+                          node -v
+                          npm -v
+                          npm install
+                          npm run build
+                        '''
+                    }
                 }
             }
         }
 
         stage('Build Docker Image') {
-            agent any
             steps {
-                dir('frontend') {
-                    sh "docker build -t ${IMAGE_REPO}:${IMAGE_TAG} ."
+                container('docker') {
+                    dir('frontend') {
+                        sh '''
+                          docker build -t ${IMAGE_REPO}:${IMAGE_TAG} .
+                        '''
+                    }
                 }
             }
         }
 
         stage('Push Docker Image') {
-            agent any
             steps {
-                withCredentials([string(credentialsId: 'dockerhub-token', variable: 'TOKEN')]) {
-                    sh '''
-                      echo $TOKEN | docker login -u atul1436 --password-stdin
-                      docker push ${IMAGE_REPO}:${IMAGE_TAG}
-                      docker logout
-                    '''
+                container('docker') {
+                    withCredentials([string(credentialsId: 'dockerhub-token', variable: 'TOKEN')]) {
+                        sh '''
+                          echo $TOKEN | docker login -u atul1436 --password-stdin
+                          docker push ${IMAGE_REPO}:${IMAGE_TAG}
+                          docker logout
+                        '''
+                    }
                 }
             }
         }
 
         stage('Deploy using Helm') {
-            agent any
             steps {
-                sh '''
-                  helm upgrade --install ${RELEASE_NAME} ${CHART_PATH} \
-                    -n ${NAMESPACE} --create-namespace \
-                    --set image.repository=${IMAGE_REPO} \
-                    --set image.tag=${IMAGE_TAG} \
-                    --set image.pullPolicy=Always
-                '''
+                container('helm') {
+                    sh '''
+                      helm upgrade --install ${RELEASE_NAME} ${CHART_PATH} \
+                        -n ${NAMESPACE} --create-namespace \
+                        --set image.repository=${IMAGE_REPO} \
+                        --set image.tag=${IMAGE_TAG} \
+                        --set image.pullPolicy=Always
+                    '''
+                }
             }
         }
     }
